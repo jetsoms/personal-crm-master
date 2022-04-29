@@ -1,0 +1,47 @@
+<div class="card card-body mb-3">
+    <div class="row">
+        <div class="col-md-4 mt-1">
+            <div class="text-muted small text-uppercase">
+                Contact(s)
+            </div>
+            <div>
+                {% for contact in interaction.contacts.all|slice:3 %}
+                    <a href="{% url 'networking_web:contact-view' contact.id %}"
+                       class="text-decoration-none">
+                        {{ contact.name }}
+                    </a><br>
+                {% endfor %}
+                {% if interaction.contacts.all|length > 3 %}
+                    and {{ interaction.contacts.all|slice:'3:'|length }} others...
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-4 mt-1">
+            <div class="text-muted small text-uppercase">
+                Interaction
+            </div>
+            <div>
+                {{ interaction.title }}
+            </div>
+        </div>
+        <div class="col-md-4 mt-1">
+            <div class="text-muted small text-uppercase">
+                When
+            </div>
+            <div>
+                {{ interaction.was_at|date }}<br>
+                {{ interaction.was_at|timesince }} ago
+            </div>
+        </div>
+    </div>
+    {% if show_description %}
+        <div class="mt-3">
+            <div class="text-muted small text-uppercase">
+                Description
+            </div>
+            <div>
+                {{ interaction.description }}
+            </div>
+        </div>
+    {% endif %}
+</div>

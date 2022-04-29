@@ -1,0 +1,127 @@
+@startuml
+
+class User {
+    id
+}
+
+class SocialAccount
+User -- SocialAccount
+
+class Contact {
+    name
+    description
+    linkedin_url
+    twitter_url
+    last_interaction_on
+    frequency_in_days
+}
+User -- Contact
+
+class EmailAddress {
+    email
+}
+Contact --{ EmailAddress
+
+class PhoneNumber {
+    phone
+}
+Contact --{ PhoneNumber
+
+class Reminder {
+    due
+    skipped_on
+}
+Contact --{ Reminder
+
+enum InteractionType {
+    Personal
+    Video
+    Voice
+    Text
+}
+
+class Interaction {
+    title
+    description
+    was_at
+    url
+    medium: [Email, Calendar, Phone]
+}
+Contact }-{ Interaction
+InteractionType -- Interaction
+
+class Message {}
+Interaction -- Message
+
+class EmailInteraction {
+    subject
+    snippet
+}
+Interaction <-- EmailInteraction
+EmailAddress -- EmailInteraction
+
+class CalendarInteraction {
+    title
+    description
+}
+Interaction <-- CalendarInteraction
+EmailAddress -- CalendarInteraction
+
+package Linkedin {
+    class LinkedinExport {}
+
+    class LinkedinExportMessage {
+        thread_id
+        profile_url
+    }
+    LinkedinExport <-- LinkedinExportMessage
+
+    class LinkedinExportConnection {}
+    LinkedinExport <-- LinkedinExportConnection
+
+    class LinkedinMessage {
+    }
+    LinkedinMessage <-- LinkedinExportMessage
+    Message <-- LinkedinMessage
+
+}
+
+class PhoneCall {
+    length
+}
+Interaction <-- PhoneCall
+PhoneNumber --{ PhoneCall
+
+class ManualInteraction {
+    title
+    description
+    was_at
+    url
+    type
+}
+Interaction <-- ManualInteraction
+
+package Google {
+    class GoogleEmail {
+        email_interaction_id
+        --- external ---
+        id
+        header_from
+        header_to
+        snippet
+        ...
+    }
+    EmailInteraction -- GoogleEmail
+
+    class GoogleCalendarEvent {
+        --- external ---
+        id
+        data: json
+    }
+    CalendarInteraction -- GoogleCalendarEvent
+
+    SocialAccount -- GoogleCalendarEvent
+    SocialAccount -- GoogleEmail
+}
+
+@enduml

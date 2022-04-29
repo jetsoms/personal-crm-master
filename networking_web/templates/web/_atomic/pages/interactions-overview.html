@@ -1,0 +1,22 @@
+{% extends '../templates/sidebar.html' %}
+
+{% block content-title %}Interactions{% endblock %}
+{% block content-description %}
+    Your latest interactions.
+{% endblock %}
+
+{% block content-main %}
+    {% if interaction_list or request.user.contacts %}
+        {% include '../molecules/interaction-add-button.html' %}
+
+        {% include '../organisms/interaction-list.html' with interactions=interaction_list|slice:10 %}
+    {% else %}
+        <div class="alert alert-primary">
+            <strong>To create interactions, you need contacts</strong><br>
+            Please create <a href="{% url 'networking_web:contact-overview' %}">create contacts</a> first.
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content-sidebar %}
+{% endblock %}

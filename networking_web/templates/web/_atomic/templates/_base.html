@@ -1,0 +1,115 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* reset font size */
+        .material-icons {
+            font-size: inherit;
+        }
+
+        .display-1, .display-2, .display-3 {
+            font-family: "Raleway", "Roboto", sans-serif;
+        }
+
+        body {
+            font-family: "Roboto", sans-serif;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        });
+    </script>
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body style="background-color: #EEE">
+
+<header class="p-3 mb-5 border-bottom bg-dark text-white">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="{% url 'networking_web:index' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                <span class="me-3 fw-bold text-white">Personal CRM</span>
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="{% url 'networking_web:contact-overview' %}" class="nav-link px-3 link-secondary">Contacts</a></li>
+                <li><a href="{% url 'networking_web:interactions-overview' %}" class="nav-link px-3 link-secondary">Interactions</a></li>
+            </ul>
+
+            <!--
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            </form>
+            -->
+
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/lorey.png" alt="mdo" class="rounded-circle" width="32" height="32">
+                </a>
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="{% url 'socialaccount_connections' %}">your integrations</a></li>
+                    <li><a class="dropdown-item" href="{% url 'account_email' %}">your emails</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'networking_public:index' %}">go to home</a></li>
+                    <li><a class="dropdown-item" href="{% url 'account_logout' %}">sign out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    {% if messages %}
+        <div>
+            <strong>Messages:</strong>
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
